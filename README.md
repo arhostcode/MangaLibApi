@@ -9,11 +9,15 @@ from mangalib_api import MangaLibApi
 3. Use MangaLibApi, for example:
 ```python
 from mangalib_api import MangaLibApi
+
 api = MangaLibApi()
+
 list_mangas = api.getMangaList("rate", "desc", 1)
 print(list_mangas)
+
 first_manga = api.getManga(id=list_mangas[0]['id'])
 print(first_manga)
+
 api.closeApi()
 ```
 
@@ -27,8 +31,11 @@ api.closeApi()
 1. getMangaList()
 ```python
 from mangalib_api import MangaLibApi
+
 api = MangaLibApi()
+
 api.getMangaList("sort", "dir", "page") # return list [ { name: "Manga name", id: "Manga id" } ]
+
 api.closeApi()
 ```
 ```
@@ -43,9 +50,12 @@ page:
 2. getManga()
 ```python
 from mangalib_api import MangaLibApi
+
 api = MangaLibApi()
+
 api.getManga(name="Manga name") # getting id from mangas.json
 api.getManga(id="Manga id")
+
 api.closeApi()
 ```
 Manga class structure:
