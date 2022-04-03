@@ -1,5 +1,5 @@
 import json
-from manga import Manga
+
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
@@ -10,14 +10,14 @@ class MangaLibApi:
         op.add_argument('headless')
         self.driver = webdriver.Chrome(options=op)
 
-    def getManga(self, name="", mangaSpecName=""):
+    def getManga(self, name="", id=""):
 
-        if mangaSpecName == "":
-            mangaSpecName = self._getSpecName_(name)
-            if mangaSpecName is None:
+        if id == "":
+            id = self._getSpecName_(name)
+            if id is None:
                 return None
 
-        self.driver.get(f'https://mangalib.me/{mangaSpecName}')
+        self.driver.get(f'https://mangalib.me/{id}')
         soup = BeautifulSoup(self.driver.page_source, features="html.parser")
         if len(soup.select(".media-sidebar__cover img")) == 0:
             return None
@@ -57,3 +57,20 @@ class MangaLibApi:
         for x in soup.find_all("h3", {'class': "media-card__title line-clamp"}):
             mangas.append({"name": x.text, "id": x.parent.parent['data-src'].split("/")[5]})
         return mangas
+    def closeApi(self):
+        self.driver.close()
+        self.driver.quit()
+
+class Manga:
+    def __init__(self, name, chapterCount, desc, rate, tags, similar, imgUrl, typeM):
+        self.name = name
+        self.chapterCount = chapterCount
+        self.chapterCount = chapterCount
+        self.desc = desc
+        self.rate = rate
+        self.tags = tags
+        self.similar = similar
+        self.imgUrl = imgUrl
+        self.typeM = typeM
+    def __str__(self):
+        return f"( Manga: ( name: {self.name}, chapterCount: {self.chapterCount}, desc: {self.desc}, rate: {self.rate}, tags: {self.tags}, similar: {self.similar}, tags: {self.tags}, imgUrl: {self.imgUrl} )"
